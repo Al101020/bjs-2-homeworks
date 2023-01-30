@@ -8,8 +8,6 @@ function solveEquation(a, b, c) {
     let x2 = (-b - Math.sqrt(d) )/(2*a);
     arr.push(x1);
     arr.push(x2);
-  } else if (d < 0) {
-
   } else if (d === 0) {
     let x = - (b / 2 * a);
 
@@ -20,16 +18,10 @@ function solveEquation(a, b, c) {
 }
 
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  if (isNaN(percent)) {
+  if (isNaN(percent) || isNaN(contribution) || isNaN(amount) || isNaN(countMonths)) {
     return false;
-  } else if (isNaN(contribution)) {
-    return false;
-  } else if (isNaN(amount)) {
-    return false;
-  } else if (isNaN(countMonths)) {
-    return false;
-  }
-
+  } 
+  
   let P = percent/100/12
   console.log('P = ' + P);
   let S = amount - contribution;
@@ -38,5 +30,4 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   let totalAmount = monthlyPayment * n
 
   return +totalAmount.toFixed(2);
-
 }
