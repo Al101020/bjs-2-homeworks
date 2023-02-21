@@ -20,22 +20,19 @@ Student.prototype.addMarks = function (...marks) {
 Student.prototype.getAverage = function () {
     if (this.hasOwnProperty('marks') == false || this.marks.length === 0) {
         return 0;
-    } else {
-        let result = this.marks.reduce((acc, item, index, arr) => {
-            acc += item;
-            if (index === arr.length -1) {
-            return acc / arr.length;
-            }
-            return acc;
-            }, 0)
-          return result;
-
+    }
+    let result = this.marks.reduce((acc, item, index, arr) => {
+        acc += item;
+        if (index === arr.length -1) {
+        return acc / arr.length;
         }
+        return acc;
+    }, 0)
+    return result;
 }
 
 Student.prototype.exclude = function (reason) {
     delete this.subject;
     delete this.marks;
-    this.excluded = 'прогулы';
-    //this.excluded = ['reason', 'прогулы'];
+    this.excluded = reason;
 }
