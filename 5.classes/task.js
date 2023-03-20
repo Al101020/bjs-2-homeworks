@@ -5,6 +5,8 @@ class PrintEditionItem {
         this.pagesCount = pagesCount;
         this.state = 100;
         this.type = null;
+
+        this.userName = null;
     }
 
 
@@ -25,9 +27,6 @@ class PrintEditionItem {
     }   
 }
 
-//let bbb = new PrintEditionItem("www", 2000, 10)
-//bbb.state = 50;
-
 class Magazine extends PrintEditionItem {
     constructor(name, releaseDate, pagesCount = null) {
         super(name, releaseDate, pagesCount);
@@ -35,8 +34,6 @@ class Magazine extends PrintEditionItem {
         this.type = "magazine";
     }   
 }
-
-
 
 class Book extends PrintEditionItem {
     constructor(author, name, releaseDate, pagesCount = null) {
@@ -47,12 +44,9 @@ class Book extends PrintEditionItem {
     }   
 }
 
-// let B_book = new Book( "Иван Бунин","Тёмные аллеи", 1901, 300)
-
 class NovelBook extends Book {
     constructor(author, name, releaseDate, pagesCount = null) {
         super(author, name, releaseDate, pagesCount);
- //       this.author = author;        
         this.state = 100;
         this.type = "novel";
     }   
@@ -73,7 +67,7 @@ class DetectiveBook extends Book {
         this.type = "detective";
     }   
 }
-// let D_book = new DetectiveBook( "bunin","www", 2010, 1010)
+
 
 class Library {
     constructor(name, books = []) {
@@ -82,48 +76,118 @@ class Library {
     }
 
     addBook(book) {
+        if (book.state > 30) {
         this.books.push(book);
+        } else {
+            console.log('у книги статус меньше 30');
+        }
     }
 
 
+
+// -------
 
     findBookBy(type, value) {
-        // У меня в консоли вроди всё находит
-        let searchType = type;
-        let searchValue = value;
-
         for (let i = 0; i < this.books.length; i++) {
-            if (searchType in this.books[i]) {
-//              console.log('свойство есть');
-                if (searchValue === this.books[i][searchType]) {
-                    console.log('-= свойство РАВНО значению, книга найдена =-');
-                    console.log(this.books[i]);
-                } else {
-//                  console.log('------------------------------------');
-                    return null;
+//            console.log(this.books[i]);
+//            if ([type] in this.books[i]) {
+//                console.log('[type] нашлось');
+                if (this.books[i][type] === value) {
+//                    console.log('[type] === value');
+//                    console.log(this.books[i]);
+                    return this.books[i];
                 }
-            } else {
-                console.log('свойство нет');
-                return null;                
-            }
+    
+//            } 
         }
-		
+        return null;            
     }
+
+
+
+
 
     giveBookByName(bookName) {
+
         for (let i = 0; i < this.books.length; i++) {
-            if  (bookName === this.books[i].name) {
-                console.log('книга нашлась');
-                return this.books[i];
-            } else {
-                console.log('книга не нашлась');
-            }
+            if (bookName === this.books[i].name) {
+                    this.books.splice([i],1);
+                }            
         }
-        
+        return null;
     }
 
 
 
+//        for (let i = 0; i < this.books.length; i++) {
+//            if  (bookName === this.books[i].name) this.books.splice([i],1), console.log('книга нашлась');
+//            return console.log('книга не нашлась');
+//        }
+//    }
 
-    
+}
+
+// -------
+
+
+
+class Student {
+    constructor(name) {
+        this.name = name;
+        this.marks = {};
+    }
+
+    addMark(mark, subject) {
+        if (mark <= 5 && mark >= 2) {
+            if ([subject] in this.marks) {
+                this.marks[subject].push(mark);
+            } else {
+                this.marks[subject] = [];
+                this.marks[subject].push(mark);
+            }
+        }
+    }
+
+    getAverageBySubject(subject) {
+        if (subject in this.marks) {
+//            console.log('предмет есть');
+            if (this.marks[subject].length === 0) {
+//                console.log('НО - length === 0');
+                return 0;
+            }
+            let sum = 0;
+            for (let i = 0; i < this.marks[subject].length; i++) {
+                sum += this.marks[subject][i];
+            }
+//            console.log('средняя оцека по: ' + subject);
+            return sum / this.marks[subject].length;
+        } else {
+//            console.log('предмета НЕТ');
+            return 0;
+        }
+    }
+
+    getAverage() {
+        
+        if (this.marks.length === null) {
+            console.log('marks пустой');
+            return null;
+        } else if (this.marks.length !== null) {
+            const arrayMarks = Object.values(this.marks);
+            
+            let summ = 0;
+            let quantity = 0;
+            
+            for (let i = 0; i < arrayMarks.length; i++) {
+                for (let ii = 0; ii < arrayMarks[i].length; ii++) {
+//                    console.log('Интерес');
+//                    console.log(arrayMarks[i][ii]);
+                    summ += arrayMarks[i][ii];
+                    quantity += 1;
+                }
+            }
+            return summ / quantity;
+        }
+    }
+
 }
