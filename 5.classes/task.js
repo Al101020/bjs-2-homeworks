@@ -9,7 +9,6 @@ class PrintEditionItem {
         this.userName = null;
     }
 
-
     set state(number){
         this._state = number;
       }
@@ -68,7 +67,6 @@ class DetectiveBook extends Book {
     }   
 }
 
-
 class Library {
     constructor(name, books = []) {
         this.name = name;
@@ -83,53 +81,29 @@ class Library {
         }
     }
 
-
-
-// -------
-
     findBookBy(type, value) {
         for (let i = 0; i < this.books.length; i++) {
-//            console.log(this.books[i]);
-//            if ([type] in this.books[i]) {
-//                console.log('[type] нашлось');
                 if (this.books[i][type] === value) {
-//                    console.log('[type] === value');
-//                    console.log(this.books[i]);
                     return this.books[i];
                 }
-    
-//            } 
-        }
+            }
         return null;            
     }
-
-
-
-
 
     giveBookByName(bookName) {
 
         for (let i = 0; i < this.books.length; i++) {
+
             if (bookName === this.books[i].name) {
-                    this.books.splice([i],1);
-                }            
+                let book = this.books[i];
+                this.books.splice([i],1);
+                return book;
+                }
         }
         return null;
     }
 
-
-
-//        for (let i = 0; i < this.books.length; i++) {
-//            if  (bookName === this.books[i].name) this.books.splice([i],1), console.log('книга нашлась');
-//            return console.log('книга не нашлась');
-//        }
-//    }
-
 }
-
-// -------
-
-
 
 class Student {
     constructor(name) {
@@ -150,19 +124,15 @@ class Student {
 
     getAverageBySubject(subject) {
         if (subject in this.marks) {
-//            console.log('предмет есть');
             if (this.marks[subject].length === 0) {
-//                console.log('НО - length === 0');
                 return 0;
             }
             let sum = 0;
             for (let i = 0; i < this.marks[subject].length; i++) {
                 sum += this.marks[subject][i];
             }
-//            console.log('средняя оцека по: ' + subject);
             return sum / this.marks[subject].length;
         } else {
-//            console.log('предмета НЕТ');
             return 0;
         }
     }
@@ -180,8 +150,6 @@ class Student {
             
             for (let i = 0; i < arrayMarks.length; i++) {
                 for (let ii = 0; ii < arrayMarks[i].length; ii++) {
-//                    console.log('Интерес');
-//                    console.log(arrayMarks[i][ii]);
                     summ += arrayMarks[i][ii];
                     quantity += 1;
                 }
@@ -189,5 +157,4 @@ class Student {
             return summ / quantity;
         }
     }
-
 }
