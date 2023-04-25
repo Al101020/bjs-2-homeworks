@@ -11,6 +11,10 @@ class AlarmClock {
             throw new Error('Отсутствуют обязательные аргументы');
         }
 
+        if (this.alarmCollection.some((elem) => time === elem.time)) {
+            console.warn('Уже присутствует звонок на это же время');
+        }                                                            //существуютли звонки с таким же временем
+
         this.alarmCollection.push({time, callback, canCall: true});
     }
 
@@ -26,23 +30,16 @@ class AlarmClock {
     }
 
     start() {
-        
         if (this.intervalId !== null) {
             return;
         };
         
         this.intervalId = setInterval(() => this.alarmCollection.forEach((item, index) => {
-            if (item.time == new Date().toLocaleTimeString("ru-Ru", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                }) && item.canCall == true) {
-                    console.log('время запускать коллбэк');
+            if (item.time == this.getCurrentFormattedTime() && item.canCall == true) {
                     item.canCall = false;
                     item.callback();
                 }
- 
-        })        , 1000);
-
+        }) , 1000);
     }
 
     stop() {
@@ -59,14 +56,3 @@ class AlarmClock {
         this.alarmCollection = [];
     }
 }
-
-
-
-// ----- для проверки -----
-const callback = f => f;
-clock = new AlarmClock();
-clock.addClock("21:15", callback);
-clock.addClock("12:25", callback);
-clock.addClock("11:57", callback);
-
-// clock.addClock("11:30", callback);
